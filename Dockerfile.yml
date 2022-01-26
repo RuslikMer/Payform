@@ -33,4 +33,4 @@ ENV BROWSER chrome
 
 VOLUME $ALLURE_FOLDER_CHROME
 
-CMD /venv/bin/pytest -v -n2 run.py --alluredir=/$ALLURE_FOLDER_CHROME
+CMD run.sh --alluredir=/$ALLURE_FOLDER_CHROME
