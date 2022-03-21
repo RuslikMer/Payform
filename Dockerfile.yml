@@ -22,11 +22,11 @@ COPY requirements.txt .
 RUN pip3 install virtualenv && \
     virtualenv $VENV_DIR
 
-SOURCE venv/Scripts/activate
+SOURCE $VENV_DIR/Scripts/activate
 
 RUN $PIP_EXEC install -r requirements.txt
 
-DEACTIVATE && SOURCE venv/Scripts/activate
+DEACTIVATE && SOURCE $VENV_DIR/Scripts/activate
 
 ENV APP_HOME /usr/src/app
 WORKDIR $APP_HOME
