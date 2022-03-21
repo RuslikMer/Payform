@@ -1,4 +1,8 @@
 
 # shellcheck disable=SC2164
 cd tests
-pytest -v -n2
+while [ -n "$1" ]
+do
+    pytest -vv -n4 --driver chrome --url https://payform.ru/
+shift
+done
