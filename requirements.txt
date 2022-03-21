@@ -3,4 +3,4 @@ allure-pytest
 selenium
 pytest-xdist
 requests
-chromedriver-binary==96.0.4664.18.0
+chromedriver-binary
