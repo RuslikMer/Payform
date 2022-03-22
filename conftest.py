@@ -22,7 +22,8 @@ def driver(request):
     if driver == 'firefox' or driver == 'ff':
         driver = webdriver.Firefox()
     elif driver == 'chrome':
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome('venv/Lib/site-packages/chromedriver_binary/chromedriver.exe')
+        #driver = webdriver.Chrome()
     else:
         raise ValueError('invalid driver name: ' + driver)
 
