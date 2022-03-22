@@ -48,7 +48,7 @@ ENV APP_HOME /usr/src/app
 WORKDIR $APP_HOME
 COPY . $APP_HOME
 
-ENV ALLURE_FOLDER_CHROME /result
+ENV ALLURE_FOLDER_CHROME ./allure-results
 ENV TEST_HOST https://testingqa.payform.ru/
 ENV BROWSER chrome
 ENV DISPLAY=:0
