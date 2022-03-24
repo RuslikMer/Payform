@@ -3,12 +3,10 @@ import time
 from datetime import datetime
 import allure
 import pytest
-from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from allure_commons.types import AttachmentType
 
 from pages.payform import Payform
-from setup import setup
 
 sys.path.append('pages')
 sys.dont_write_bytecode = True
@@ -32,7 +30,7 @@ def driver(request):
     if driver == 'firefox' or driver == 'ff':
         driver = webdriver.Firefox()
     elif driver == 'chrome':
-#        chromedriver_autoinstaller.install()
+        #       chromedriver_autoinstaller.install()
         chromeOptions = webdriver.ChromeOptions()
         chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         chromeOptions.add_argument("--no-sandbox")
@@ -45,8 +43,8 @@ def driver(request):
         chromeOptions.add_argument("start-maximized")
         chromeOptions.add_argument("disable-infobars")
         driver = webdriver.Chrome(chrome_options=chromeOptions)
-#        driver = webdriver.Chrome(options=chrome_options)
-#        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver")
+    #        driver = webdriver.Chrome(options=chrome_options)
+    #        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver")
     else:
         raise ValueError('invalid driver name: ' + driver)
 
