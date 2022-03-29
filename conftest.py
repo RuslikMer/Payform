@@ -1,12 +1,13 @@
 import sys
 import time
-from datetime import datetime
 import allure
 import pytest
+from datetime import datetime
 from selenium import webdriver
 from allure_commons.types import AttachmentType
 
 from pages.payform import Payform
+from pages.payment_systems import PaymentSystems
 
 sys.path.append('pages')
 sys.dont_write_bytecode = True
@@ -18,41 +19,33 @@ def pytest_addoption(parser):
     parser.addoption('--driver', action='store', default='chrome', help='chrome or firefox')
 
 
-@pytest.fixture(scope="module", autouse=True)
-def setup(self, driver):
-    global payform
-    payform = Payform(driver)
-
-
 @pytest.fixture(scope="session")
 def driver(request):
     driver = request.config.getoption('--driver')
     if driver == 'firefox' or driver == 'ff':
         driver = webdriver.Firefox()
     elif driver == 'chrome':
-        #       chromedriver_autoinstaller.install()
-        chromeOptions = webdriver.ChromeOptions()
-        chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        chromeOptions.add_argument("--no-sandbox")
-        chromeOptions.add_argument("--disable-setuid-sandbox")
-        chromeOptions.add_argument("--remote-debugging-port=9222")
-        chromeOptions.add_argument("--disable-dev-shm-using")
-        chromeOptions.add_argument("--disable-extensions")
-        chromeOptions.add_argument("--disable-gpu")
-        chromeOptions.add_argument("--headless")
-        chromeOptions.add_argument("start-maximized")
-        chromeOptions.add_argument("disable-infobars")
-        driver = webdriver.Chrome(chrome_options=chromeOptions)
-    #        driver = webdriver.Chrome(options=chrome_options)
-    #        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver")
+        # chromeOptions = webdriver.ChromeOptions()
+        # chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        # chromeOptions.add_argument("--no-sandbox")
+        # chromeOptions.add_argument("--disable-setuid-sandbox")
+        # chromeOptions.add_argument("--remote-debugging-port=9222")
+        # chromeOptions.add_argument("--disable-dev-shm-using")
+        # chromeOptions.add_argument("--disable-extensions")
+        # chromeOptions.add_argument("--disable-gpu")
+        # chromeOptions.add_argument("--headless")
+        # chromeOptions.add_argument("start-maximized")
+        # chromeOptions.add_argument("disable-infobars")
+        # driver = webdriver.Chrome(options=chromeOptions)
+        driver = webdriver.Chrome()
     else:
         raise ValueError('invalid driver name: ' + driver)
 
-    # driver = webdriver.Chrome(executable_path="chromedriver.exe")
     driver.set_window_size(1920, 1080)
     driver.base_url = request.config.getoption('--url') or 'https://testingqa.payform.ru/'
     yield driver
     driver.close()
+    driver.quit()
 
 
 # настройка хука, чтобы проверить, прошел ли тест
@@ -81,4 +74,5 @@ def test_failed_check(request):
 def take_screenshot(driver, nodeid):
     time.sleep(1)
     file_name = f'{nodeid}_{datetime.today().strftime("%Y-%m-%d_%H:%M")}.png'.replace("/", "_").replace("::", "__")
-    allure.attach(driver.save_screenshot(file_name), name="Screenshot", attachment_type=AttachmentType.PNG)
+    allure.attach(driver.save_screenshot("./allure-results/" + file_name), name="Screenshot",
+                  attachment_type=AttachmentType.PNG)
