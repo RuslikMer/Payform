@@ -6,16 +6,26 @@ from selenium.webdriver.common.by import By
 
 class Payform(BasePage):
     @allure.step('заполнение формы для оплаты неавторизованным пользователем')
-    def fill_payform(self, order, phone, amount='', email='', extra=''):
+    def fill_payform(self, order, phone, price='', email='test@mail.ru', extra='тестовый заказ'):
         self.send_keys((By.NAME, 'order_id'), order)
         self.send_keys((By.NAME, 'customer_phone'), phone)
         if self.get_number_of_elements((By.NAME, 'products[cur_1][price]')) == 0:
-            self.send_keys((By.NAME, 'order_sum'), amount)
+            self.send_keys((By.NAME, 'order_sum'), price)
+        self.send_keys((By.NAME, 'customer_email'), email)
+        self.send_keys((By.NAME, 'customer_extra'), extra)
+
+    @allure.step('заполнение формы для оплаты авторизованным пользователем')
+    def fill_payform_auth(self, order, phone, price='', email='test@mail.ru', extra='тестовый заказ'):
+        self.send_keys((By.NAME, 'order_id'), order)
+        self.send_keys((By.NAME, 'customer_phone'), phone)
+        self.send_keys((By.NAME, 'products[cur_1][price]'), price)
+        self.wait_for_element((By.XPATH, '//span[@class="paygoods-product-sum"][contains(.,"' + price + '")]'))
         self.send_keys((By.NAME, 'customer_email'), email)
         self.send_keys((By.NAME, 'customer_extra'), extra)
 
     @allure.step('нажатие кнопки оплатить')
     def press_buy(self, price):
+        self.sleep()
         self.click_to((By.NAME, 'do'))
         self.wait_for_element((By.XPATH, '//span[contains(@class, "price")][contains(., "'+price+'")]'))
         #return self.get_number_from_element((By.TAG_NAME, 'h1'))
@@ -48,8 +58,6 @@ class Payform(BasePage):
     def fill_product_data(self, price, quantity, name='тест'):
         self.change_service('товары')
         self.send_keys((By.NAME, 'products[cur_1][name]'), name)
-        self.send_keys((By.NAME, 'products[cur_1][price]'), price)
-        self.wait_for_element((By.XPATH, '//span[@class="paygoods-product-sum"][contains(.,"' + price + '")]'))
         self.send_keys((By.NAME, 'products[cur_1][quantity]'), quantity)
 
     @allure.step('отправить счёт')

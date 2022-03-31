@@ -32,6 +32,6 @@ class Payments(BasePage):
         self.click_to((By.XPATH, '//li[contains(.,"' + status + '")]'))
 
     @allure.step('очистка фильтра')
-    def select_status(self):
+    def clear_filter(self):
         self.click_to((By.NAME, 'filter_payment_status'))
         self.click_to((By.XPATH, '//li[.="Очистить фильтр"]'))
