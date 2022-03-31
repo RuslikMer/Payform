@@ -6,9 +6,6 @@ from datetime import datetime
 from selenium import webdriver
 from allure_commons.types import AttachmentType
 
-from pages.payform import Payform
-from pages.payment_systems import PaymentSystems
-
 sys.path.append('pages')
 sys.dont_write_bytecode = True
 

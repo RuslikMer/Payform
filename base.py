@@ -23,8 +23,12 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 30)
         self.base_url = driver.base_url
+        self.actions = ActionChains(driver)
 
     def click_to(self, locator):
+        #element = self.find_element(locator)
+        #self.actions.move_to_element(element)
+        #self.actions.perform()
         return self.find_element(locator).click()
 
     def send_keys(self, locator, text):

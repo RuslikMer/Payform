@@ -18,3 +18,7 @@ class Subscribes(BasePage):
     def fill_last_data(self, first_data, second_data):
         self.send_keys((By.NAME, 'filter_date_last_payment_start'), first_data)
         self.send_keys((By.NAME, 'filter_date_last_payment_end'), second_data)
+
+    @allure.step('применить фильтры')
+    def apply_filters(self):
+        self.click_to((By.XPATH, '//button[.="Применить"]'))

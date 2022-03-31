@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 
 class Complaint(BasePage):
     @allure.step('отправка жалобы')
-    def send_complaint(self, name, phone, email, text):
+    def send_complaint(self, name, phone, email='test@mail.ru', text='тестовое сообщение'):
         self.send_keys((By.NAME, 'name'), name)
         self.send_keys((By.NAME, 'phone'), phone)
         self.send_keys((By.NAME, 'email'), email)
