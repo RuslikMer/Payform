@@ -16,18 +16,14 @@ class TestPayform(unittest.TestCase):
     def setUp(self):
         global driver
         chromeOptions = webdriver.ChromeOptions()
-        # chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         chromeOptions.add_argument("--no-sandbox")
         chromeOptions.add_argument("--disable-setuid-sandbox")
-        #chromeOptions.add_argument("--remote-debugging-port=9222")
         chromeOptions.add_argument("--disable-dev-shm-using")
         chromeOptions.add_argument("--disable-extensions")
-        #chromeOptions.add_argument("--disable-gpu")
-        # chromeOptions.add_argument("--headless")
-        #chromeOptions.add_argument("start-maximized")
+        #chromeOptions.add_argument("--headless")
         chromeOptions.add_argument("disable-infobars")
         driver = webdriver.Chrome(options=chromeOptions)
-        #driver = webdriver.Chrome()
+        # driver = webdriver.Chrome()
         driver.set_window_size(1920, 1080)
         driver.base_url = 'https://testingqa.payform.ru/'
         global payform
@@ -47,11 +43,38 @@ class TestPayform(unittest.TestCase):
         subscribes = Subscribes(driver)
         report = Report(driver)
 
-    def test_fill_payform_auth(self):
+    def test_fill_payform_sms_invoice(self):
         payform.go_to_site()
         payform.sign_in()
         payform.fill_payform_auth('тест', '9991112233', '100')
         payform.fill_product_data('100', '1')
+        payform.send_invoice('sms')
+
+    def test_fill_payform_link_invoice(self):
+        payform.go_to_site()
+        payform.sign_in()
+        payform.fill_payform_auth('тест', '9991112233', '100')
+        payform.fill_product_data('100', '1')
+        payform.send_invoice('ссылку')
+
+    def test_fill_payform_qr_invoice(self):
+        payform.go_to_site()
+        payform.sign_in()
+        payform.fill_payform_auth('тест', '9991112233', '100')
+        payform.fill_product_data('100', '1')
+        payform.send_invoice('QR')
+
+    def test_fill_payform_subscription(self):
+        payform.go_to_site()
+        payform.sign_in()
+        payform.fill_payform_auth('тест', '9991112233', '100')
+        payform.choose_subscription()
+
+    def test_fill_payform_course(self):
+        payform.go_to_site()
+        payform.sign_in()
+        payform.fill_payform_auth('тест', '9991112233', '100')
+        payform.choose_course()
 
     def test_fill_payform(self):
         payform.go_to_site()
@@ -85,32 +108,114 @@ class TestPayform(unittest.TestCase):
         payform.choose_payment_type('ИП')
         pay_systems.download_document()
 
-    def test_payments_filter(self):
+    def test_payments_filter_date(self):
         payform.go_to_site()
         payform.sign_in()
         home.go_to_page_from_footer('Список платежей')
         payments.open_filters()
-        payments.fill_data('01.01.2018', '31.03.2022')
-        payments.apply_filters()
+        payments.fill_date('01.01.2018', '31.03.2022', True)
+
+    def test_payments_filter_id(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Список платежей')
+        payments.open_filters()
+        payments.fill_text('2993675', True)
+
+    def test_payments_filter_phone(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Список платежей')
+        payments.open_filters()
+        payments.fill_text('79910002226', True)
+
+    def test_payments_filter_method(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Список платежей')
+        payments.open_filters()
+        payments.select_payment_type('', True)
+
+    def test_payments_filter_status(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Список платежей')
+        payments.open_filters()
+        payments.select_status('', True)
 
     def test_incoming_filter(self):
         payform.go_to_site()
         payform.sign_in()
         home.go_to_page_from_footer('Возвраты')
         payments.open_filters()
-        payments.fill_data('01.01.2018', '31.03.2022')
-        incoming.fill_incoming_data('01.01.2018', '31.03.2022')
-        payments.apply_filters()
+        incoming.fill_incoming_date('01.01.2018', '31.03.2022')
+        payments.fill_date('01.01.2018', '31.03.2022', True)
 
-    def test_subscribes_filter(self):
+    def test_incoming_filter_id(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Возвраты')
+        payments.open_filters()
+        payments.fill_text('2993675', True)
+
+    def test_incoming_filter_phone(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Возвраты')
+        payments.open_filters()
+        payments.fill_text('79910002226', True)
+
+    def test_incoming_filter_email(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Возвраты')
+        payments.open_filters()
+        payments.fill_text('mordasov.k@gmail.com', True)
+
+    def test_incoming_filter_method(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Возвраты')
+        payments.open_filters()
+        payments.select_payment_type('', True)
+
+    def test_incoming_filter_status(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Возвраты')
+        payments.open_filters()
+        payments.select_status('', True)
+
+    def test_subscribes_filter_date(self):
         payform.go_to_site()
         payform.sign_in()
         home.go_to_page_from_footer('Подписчики')
         payments.open_filters()
-        subscribes.fill_last_data('01.01.2018', '31.03.2022')
-        subscribes.fill_completion_data('01.01.2018', '31.03.2022')
-        subscribes.fill_next_data('01.01.2018', '31.03.2022')
+        subscribes.fill_last_date('01.01.2018', '31.03.2022')
+        subscribes.fill_completion_date('01.01.2018', '31.03.2022')
+        subscribes.fill_next_date('01.01.2018', '31.03.2022')
         subscribes.apply_filters()
+
+    def test_subscribes_filter_phone(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Подписчики')
+        payments.open_filters()
+        payments.fill_text('79200271734', True)
+
+    def test_subscribes_filter_subscription(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Подписчики')
+        payments.open_filters()
+        subscribes.select_subscription('', True)
+
+    def test_subscribes_filter_state(self):
+        payform.go_to_site()
+        payform.sign_in()
+        home.go_to_page_from_footer('Подписчики')
+        payments.open_filters()
+        subscribes.select_state('', True)
 
     def test_reports_filter(self):
         payform.go_to_site()

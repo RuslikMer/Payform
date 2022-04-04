@@ -51,7 +51,7 @@ class Payform(BasePage):
 
     @allure.step('изменить услугу')
     def change_service(self, service_type):
-        if self.get_number_of_elements((By.XPATH, '//span[.="'+service_type+'"]')) > 0:
+        if self.get_number_of_elements((By.XPATH, '//span[contains(.,"'+service_type+'")]')) == 0:
             self.click_to((By.XPATH, '//label[not(contains(@class, "hidden"))]/*[contains(.,"'+service_type+'")]'))
 
     @allure.step('заполнение данных по товару')
@@ -59,6 +59,18 @@ class Payform(BasePage):
         self.change_service('товары')
         self.send_keys((By.NAME, 'products[cur_1][name]'), name)
         self.send_keys((By.NAME, 'products[cur_1][quantity]'), quantity)
+
+    @allure.step('выбор курса')
+    def choose_course(self):
+        self.change_service('курс')
+        self.click_to((By.XPATH, '//div[contains(@class,"input-course")]//div[@class="jq-selectbox__select"]'))
+        self.click_to((By.XPATH, '//div[contains(@class,"input-course")]//div[@class="jq-selectbox__dropdown"]//li[not(contains(.,"выберите курс"))]'))
+
+    @allure.step('выбор подписки')
+    def choose_subscription(self):
+        self.change_service('подписк')
+        self.click_to((By.XPATH, '//div[contains(@class,"input-subscription")]//div[@class="jq-selectbox__select"]'))
+        self.click_to((By.XPATH, '//div[contains(@class,"input-subscription")]//div[@class="jq-selectbox__dropdown"]//li[not(contains(.,"не выбрана"))]'))
 
     @allure.step('отправить счёт')
     def send_invoice(self, type):
