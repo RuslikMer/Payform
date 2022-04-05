@@ -24,7 +24,7 @@ class TestPayform(unittest.TestCase):
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("disable-infobars")
-        driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options)
         # driver = webdriver.Chrome()
         driver.set_window_size(1920, 1080)
         driver.base_url = 'https://testingqa.payform.ru/'
