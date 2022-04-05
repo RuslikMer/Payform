@@ -15,7 +15,7 @@ docker_job: # Название job
     - mkdir ./allure-results
     - cd tests
     #- ls -la /usr/local/bin/chromedriver
-    - ./run.sh  # Запускаем тесты параллельно(-n2 обеспечивает нам это), указав папку с результатами тестов через --alluredir=
+    - pytest -v -n2 --alluredir=../allure-results  # Запускаем тесты параллельно(-n2 обеспечивает нам это), указав папку с результатами тестов через --alluredir=
     - ls -la ../allure-results/*
   allow_failure: true # Это позволит нам продолжить выполнение пайплайна в случае, если тесты упали.
   artifacts: # Сущность, с помощью которой, мы сохраним результат тестирования.
