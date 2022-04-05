@@ -230,4 +230,3 @@ class TestPayform(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
-        driver.quit()
