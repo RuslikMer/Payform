@@ -14,14 +14,15 @@ from pages.subscribes import Subscribes
 class TestPayform(unittest.TestCase):
     def setUp(self):
         global driver
-        chromeOptions = webdriver.ChromeOptions()
-        chromeOptions.add_argument("--no-sandbox")
-        chromeOptions.add_argument("--disable-setuid-sandbox")
-        chromeOptions.add_argument("--disable-dev-shm-using")
-        chromeOptions.add_argument("--disable-extensions")
-        chromeOptions.add_argument("--headless")
-        chromeOptions.add_argument("disable-infobars")
-        driver = webdriver.Chrome(options=chromeOptions)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-setuid-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-using")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument("disable-infobars")
+        driver = webdriver.Chrome(options=chrome_options)
         # driver = webdriver.Chrome()
         driver.set_window_size(1920, 1080)
         driver.base_url = 'https://testingqa.payform.ru/'
