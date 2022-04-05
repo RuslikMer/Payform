@@ -4,3 +4,4 @@ selenium
 pytest-xdist
 requests
 chromedriver-binary
+python-dotenv
