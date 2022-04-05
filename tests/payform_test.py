@@ -233,5 +233,5 @@ class TestPayform(unittest.TestCase):
     #    complaint.send_complaint('Тестовый Пользователь', '9991112233')
 
     def tearDown(self):
-        driver.close()
-        driver.quit()
+     #   driver.close()
+     #   driver.quit()
