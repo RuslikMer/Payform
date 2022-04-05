@@ -18,7 +18,7 @@ class TestPayform(unittest.TestCase):
         chromeOptions.add_argument("--disable-setuid-sandbox")
         chromeOptions.add_argument("--disable-dev-shm-using")
         chromeOptions.add_argument("--disable-extensions")
-        #chromeOptions.add_argument("--headless")
+        chromeOptions.add_argument("--headless")
         chromeOptions.add_argument("disable-infobars")
         driver = webdriver.Chrome(options=chromeOptions)
         # driver = webdriver.Chrome()
