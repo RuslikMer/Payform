@@ -1,6 +1,4 @@
-import pytest
 import unittest
-
 from pages.complaint import Complaint
 from pages.home import Home
 from pages.incoming import Incoming
