@@ -43,12 +43,12 @@ class Payform(BasePage):
         self.click_to((By.XPATH, '//a[@title="Очистить"]'))
 
     @allure.step('авторизация')
-    # def sign_in(self, email=os.getenv('EMAIL'), password=os.getenv('PASS')):
-    def sign_in(self, email='prodamusmerikanov@gmail.com', password='prodamusMerikanov'):
-        self.click_to((By.XPATH, '//a[@data-prodamus-open="auth.login"]'))
-        self.send_keys((By.ID, 'userMail'), email)
-        self.send_keys((By.NAME, 'auth_password'), password)
-        self.click_to((By.XPATH, '//span[@title="Войти"]'))
+    def sign_in(self, email=os.getenv('EMAIL'), password=os.getenv('PASS')):
+        if self.get_number_of_elements((By.XPATH, '//i[contains(@class,"fa-unlock")]')) == 0:
+            self.click_to((By.XPATH, '//a[@data-prodamus-open="auth.login"]'))
+            self.send_keys((By.ID, 'userMail'), email)
+            self.send_keys((By.NAME, 'auth_password'), password)
+            self.click_to((By.XPATH, '//span[@title="Войти"]'))
 
     @allure.step('изменить услугу')
     def change_service(self, service_type):
@@ -56,7 +56,7 @@ class Payform(BasePage):
             self.click_to((By.XPATH, '//label[not(contains(@class, "hidden"))]/*[contains(.,"'+service_type+'")]'))
 
     @allure.step('заполнение данных по товару')
-    def fill_product_data(self, price, quantity, name='тест'):
+    def fill_product_data(self, quantity, name='тест'):
         self.change_service('товары')
         self.send_keys((By.NAME, 'products[cur_1][name]'), name)
         self.send_keys((By.NAME, 'products[cur_1][quantity]'), quantity)
