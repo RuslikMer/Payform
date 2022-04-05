@@ -43,7 +43,8 @@ class Payform(BasePage):
         self.click_to((By.XPATH, '//a[@title="Очистить"]'))
 
     @allure.step('авторизация')
-    def sign_in(self, email=os.getenv('EMAIL'), password=os.getenv('PASS')):
+    # def sign_in(self, email=os.getenv('EMAIL'), password=os.getenv('PASS')):
+    def sign_in(self, email='prodamusmerikanov@gmail.com', password='prodamusMerikanov'):
         self.click_to((By.XPATH, '//a[@data-prodamus-open="auth.login"]'))
         self.send_keys((By.ID, 'userMail'), email)
         self.send_keys((By.NAME, 'auth_password'), password)
