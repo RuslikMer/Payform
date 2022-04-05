@@ -22,6 +22,7 @@ COPY requirements.txt .
 RUN pip3 install --upgrade pip #&& \
 #    pip3 install virtualenv
 RUN pip3 install allure-pytest
+RUN pip3 install python-dotenv
 #RUN pip3 install selenium
 #RUN pip3 install chromedriver-binary
 #RUN pip3 install webdriver-manager
