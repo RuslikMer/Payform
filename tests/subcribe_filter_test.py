@@ -1,19 +1,21 @@
-import pytest
+import unittest
 from pages.home import Home
 from pages.payform import Payform
 from pages.payment_systems import PaymentSystems
 from pages.payments import Payments
 from pages.subscribes import Subscribes
+from tests.helper import webapp
 
 
-class TestSubscribesFilter:
-    @pytest.fixture(scope="class", autouse=True)
-    def setup(self, driver):
+class TestSubscribesFilter(unittest.TestCase):
+    def setup(self):
         global payform
         global payments
         global pay_systems
         global home
         global subscribes
+        global driver
+        driver = webapp.browser()
         payform = Payform(driver)
         pay_systems = PaymentSystems(driver)
         payments = Payments(driver)
@@ -21,6 +23,9 @@ class TestSubscribesFilter:
         subscribes = Subscribes(driver)
         payform.go_to_site()
         payform.sign_in()
+
+    def tearDown(self):
+        driver.close()
 
     def test_subscribes_filter_date(self):
         payform.go_to_site()

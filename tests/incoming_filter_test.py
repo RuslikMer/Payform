@@ -1,23 +1,28 @@
-import pytest
+import unittest
 from pages.home import Home
 from pages.incoming import Incoming
 from pages.payform import Payform
 from pages.payments import Payments
+from tests.helper import webapp
 
 
-class TestIncomingFilter:
-    @pytest.fixture(scope="class", autouse=True)
-    def setup(self, driver):
+class TestIncomingFilter(unittest.TestCase):
+    def setUp(self):
         global payform
         global payments
         global home
         global incoming
+        global driver
+        driver = webapp.browser()
         payform = Payform(driver)
         payments = Payments(driver)
         home = Home(driver)
         incoming = Incoming(driver)
         payform.go_to_site()
         payform.sign_in()
+
+    def tearDown(self):
+        driver.close()
 
     def test_incoming_filter(self):
         payform.go_to_site()

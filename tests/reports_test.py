@@ -1,20 +1,25 @@
-import pytest
+import unittest
 from pages.home import Home
 from pages.payform import Payform
 from pages.report import Report
+from tests.helper import webapp
 
 
-class TestReports:
-    @pytest.fixture(scope="class", autouse=True)
-    def setup(self, driver):
+class TestReports(unittest.TestCase):
+    def setUp(self):
         global payform
         global home
         global report
+        global driver
+        driver = webapp.browser()
         payform = Payform(driver)
         home = Home(driver)
         report = Report(driver)
         payform.go_to_site()
         payform.sign_in()
+
+    def tearDown(self):
+        driver.close()
 
     def test_reports_filter(self):
         payform.go_to_site()

@@ -1,14 +1,19 @@
-import pytest
+import unittest
+from helper import webapp
 from pages.payform import Payform
 
 
-class TestPayForm:
-    @pytest.fixture(scope="class", autouse=True)
-    def setup(self, driver):
+class TestPayForm(unittest.TestCase):
+    def setUp(self):
         global payform
+        global driver
+        driver = webapp.browser()
         payform = Payform(driver)
         payform.go_to_site()
         payform.sign_in()
+
+    def tearDown(self):
+        driver.close()
 
     def test_fill_payform_sms_invoice(self):
         payform.go_to_site()
@@ -37,3 +42,5 @@ class TestPayForm:
         payform.go_to_site()
         payform.fill_payform_auth('тест', '9991112233', '100')
         payform.choose_course()
+
+
