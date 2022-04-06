@@ -8,8 +8,8 @@ def browser():
     # chrome_options.add_argument("--disable-setuid-sandbox")
     chrome_options.add_argument("--disable-dev-shm-using")
     # chrome_options.add_argument("--disable-gpu")
-    # chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=chrome_options)
     driver.set_window_size(1920, 1080)
     driver.base_url = 'https://mordasov.payform.ru'
 
