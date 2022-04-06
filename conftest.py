@@ -11,38 +11,45 @@ sys.dont_write_bytecode = True
 
 
 def pytest_addoption(parser):
-    parser.addoption('--url', action='store', default='https://testingqa.payform.ru/',
+    parser.addoption('--url', action='store', default='https://mordasov.payform.ru',
                      help='specify the base URL to test against')
     parser.addoption('--driver', action='store', default='chrome', help='chrome or firefox')
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def driver(request):
     driver = request.config.getoption('--driver')
     if driver == 'firefox' or driver == 'ff':
         driver = webdriver.Firefox()
     elif driver == 'chrome':
-        chromeOptions = webdriver.ChromeOptions()
-        chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        chromeOptions.add_argument("--no-sandbox")
-        chromeOptions.add_argument("--disable-setuid-sandbox")
-        chromeOptions.add_argument("--remote-debugging-port=9222")
-        chromeOptions.add_argument("--disable-dev-shm-using")
-        chromeOptions.add_argument("--disable-extensions")
-        chromeOptions.add_argument("--disable-gpu")
-        #chromeOptions.add_argument("--headless")
-        chromeOptions.add_argument("start-maximized")
-        chromeOptions.add_argument("disable-infobars")
-        driver = webdriver.Chrome(options=chromeOptions)
-        #driver = webdriver.Chrome()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--remote-debugging-port=9222")
+        chrome_options.add_argument("--disable-setuid-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-using")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("disable-infobars")
+        driver = webdriver.Chrome(options=chrome_options)
+        # driver = webdriver.Chrome()
     else:
         raise ValueError('invalid driver name: ' + driver)
 
     driver.set_window_size(1920, 1080)
-    driver.base_url = request.config.getoption('--url') or 'https://testingqa.payform.ru/'
-    yield driver
-    #driver.close()
+    driver.base_url = request.config.getoption('--url') or 'https://mordasov.payform.ru'
+    #yield
     #driver.quit()
+    yield driver
+    driver.close()
+    # driver.quit()
+
+
+#@pytest.fixture(scope="session", autouse=True)
+def stop():
+    yield
+    driver.close()
 
 
 # настройка хука, чтобы проверить, прошел ли тест
