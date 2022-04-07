@@ -10,7 +10,7 @@ docker_job: # Название job
     - allure-docker # С помощью этого тега gitlab поймет, какой раннер нужно запустить. Он запустит докер контейнер, из образа, который мы указывали в 6 шаге регистрации раннера.
   image: autotest:latest #python:3.6-alpine # Нужно указать образ, который будет использоваться для запуска тестов.
   before_script:
-    - pip install -r requirements.txt
+    #- pip install -r requirements.txt
   script:
     - mkdir ./allure-results
     - cd tests
