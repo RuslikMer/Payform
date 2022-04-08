@@ -20,9 +20,10 @@ class TestReports(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
 
     def test_reports_filter(self):
         payform.go_to_site()
         home.go_to_page_from_footer('Отчёты агента')
-        report.select_month('Март')
+        report.select_month()
         report.generate_report()

@@ -1,4 +1,5 @@
 import random
+import re
 import allure
 from base import BasePage
 from selenium.webdriver.common.by import By
@@ -39,8 +40,9 @@ class Subscribes(BasePage):
     def select_state(self, state='', apply=False):
         self.click_to((By.XPATH, '//select[@name="filter_state"]/following-sibling::div[@class="jq-selectbox__select"]'))
         if state == '':
-            elements = self.find_elements((By.XPATH, '//select[@name="filter_state"]/following-sibling::div//li[not(@class="sel selected")]'))
-            state = random.choice(elements).text
+            #elements = self.find_elements((By.XPATH, '//select[@name="filter_state"]/following-sibling::div//li[not(@class="sel selected")]'))
+            elements = self.find_elements((By.XPATH, '//td[@data-th="Активность"]'))
+            state = re.sub('[.|0-9|\n]', '', random.choice(elements).text)
         self.click_to((By.XPATH, '//li[contains(.,"' + state + '")]'))
         if apply:
             self.apply_filters()

@@ -23,6 +23,7 @@ class TestIncomingFilter(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
 
     def test_incoming_filter(self):
         payform.go_to_site()
@@ -35,7 +36,7 @@ class TestIncomingFilter(unittest.TestCase):
         payform.go_to_site()
         home.go_to_page_from_footer('Возвраты')
         payments.open_filters()
-        payments.fill_text('2993675', True)
+        payments.fill_text('2700213', True)
 
     def test_incoming_filter_phone(self):
         payform.go_to_site()

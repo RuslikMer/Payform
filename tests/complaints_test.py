@@ -21,6 +21,7 @@ class TestComplaint(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
 
     @pytest.mark.skip()
     def test_complaints(self):

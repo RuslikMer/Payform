@@ -8,7 +8,7 @@ from tests.helper import webapp
 
 
 class TestSubscribesFilter(unittest.TestCase):
-    def setup(self):
+    def setUp(self):
         global payform
         global payments
         global pay_systems
@@ -26,6 +26,7 @@ class TestSubscribesFilter(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
 
     def test_subscribes_filter_date(self):
         payform.go_to_site()

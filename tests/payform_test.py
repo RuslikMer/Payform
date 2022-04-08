@@ -14,6 +14,7 @@ class TestPayForm(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
 
     def test_fill_payform_sms_invoice(self):
         payform.go_to_site()

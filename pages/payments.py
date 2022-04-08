@@ -29,10 +29,12 @@ class Payments(BasePage):
 
     @allure.step('выбор способа оплаты')
     def select_payment_type(self, payment_type='', apply=False):
-        self.click_to((By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div[@class="jq-selectbox__select"]'))
         if payment_type == '':
-            elements = self.find_elements((By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div//li[not(@class="sel selected")]'))
-            payment_type = random.choice(elements).text
+            #elements = self.find_elements((By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div//li[not(@class="sel selected")]'))
+            elements = self.find_elements((By.XPATH, '//td[@data-th="Способ оплаты"]/img'))
+            payment_type = random.choice(elements).get_attribute('title')
+        self.click_to(
+            (By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div[@class="jq-selectbox__select"]'))
         self.click_to((By.XPATH, '//li[contains(.,"' + payment_type + '")]'))
         if apply:
             self.apply_filters()
@@ -42,7 +44,8 @@ class Payments(BasePage):
     def select_status(self, status='', apply=False):
         self.click_to((By.XPATH, '//select[@name="filter_payment_status"]/following-sibling::div[@class="jq-selectbox__select"]'))
         if status == '':
-            elements = self.find_elements((By.XPATH,'//select[@name="filter_payment_status"]/following-sibling::div//li[not(@class="sel selected")]'))
+            #elements = self.find_elements((By.XPATH, '//select[@name="filter_payment_status"]/following-sibling::div//li[not(@class="sel selected")]'))
+            elements = self.find_elements((By.XPATH, '//td[@data-th="Статус"]'))
             status = random.choice(elements).text
         self.click_to((By.XPATH, '//li[contains(.,"' + status + '")]'))
         if apply:

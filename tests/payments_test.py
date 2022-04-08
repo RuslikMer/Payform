@@ -18,6 +18,21 @@ class TestPayments(unittest.TestCase):
 
     def tearDown(self):
         driver.close()
+        driver.quit()
+
+    def test_sbp(self):
+        payform.go_to_site()
+        payform.fill_payform('тест', '9991112233', '100')
+        payform.press_buy('100')
+        payform.choose_payment_type('Быстрый платёж')
+        pay_systems.sbp_pay('100')
+
+    def test_moneta(self):
+        payform.go_to_site()
+        payform.fill_payform('тест', '9991112233', '100')
+        payform.press_buy('100')
+        payform.choose_payment_type('Быстрый платёж')
+        pay_systems.moneta_pay('100')
 
     def test_qiwi(self):
         payform.go_to_site()
@@ -25,6 +40,13 @@ class TestPayments(unittest.TestCase):
         payform.press_buy('100')
         payform.choose_payment_type('Qiwi')
         pay_systems.qiwi_pay('100')
+
+    def test_qiwi_rub(self):
+        payform.go_to_site()
+        payform.fill_payform('тест', '9991112233', '100')
+        payform.press_buy('100')
+        payform.choose_payment_type('QIWI Кошелек (RUB)')
+        pay_systems.qiwi_pay_rub('100')
 
     def test_sber(self):
         payform.go_to_site()
@@ -36,9 +58,9 @@ class TestPayments(unittest.TestCase):
     def test_umoney(self):
         payform.go_to_site()
         payform.fill_payform('тест', '9991112233', '100')
-        order = payform.press_buy('100')
+        payform.press_buy('100')
         payform.choose_payment_type('ЮMoney')
-        pay_systems.umoney_pay(order)
+        pay_systems.umoney_pay('100')
 
     def test_ip(self):
         payform.go_to_site()
