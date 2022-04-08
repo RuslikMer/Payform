@@ -18,6 +18,7 @@ class TestComplaint(unittest.TestCase):
         home = Home(driver)
         payform.go_to_site()
         payform.sign_in()
+        home.go_to_page_from_footer('Жалоба')
 
     def tearDown(self):
         driver.close()
@@ -25,6 +26,4 @@ class TestComplaint(unittest.TestCase):
 
     @pytest.mark.skip()
     def test_complaints(self):
-        payform.go_to_site()
-        home.go_to_page_from_footer('Жалоба')
         complaint.send_complaint('Тестовый Пользователь', '9991112233')
