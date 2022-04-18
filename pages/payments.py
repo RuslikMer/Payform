@@ -33,8 +33,7 @@ class Payments(BasePage):
             #elements = self.find_elements((By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div//li[not(@class="sel selected")]'))
             elements = self.find_elements((By.XPATH, '//td[@data-th="Способ оплаты"]/img'))
             payment_type = random.choice(elements).get_attribute('title')
-        self.click_to(
-            (By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div[@class="jq-selectbox__select"]'))
+        self.click_to((By.XPATH, '//select[@name="filter_payment_type"]/following-sibling::div[@class="jq-selectbox__select"]'))
         self.click_to((By.XPATH, '//li[contains(.,"' + payment_type + '")]'))
         if apply:
             self.apply_filters()
