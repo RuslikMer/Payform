@@ -50,7 +50,7 @@ WORKDIR $APP_HOME
 COPY . $APP_HOME
 
 ENV ALLURE_FOLDER_CHROME ./allure-results
-ENV TEST_HOST https://testingqa.payform.ru/
+ENV TEST_HOST https://your-host/
 ENV BROWSER chrome
 ENV DISPLAY=:0
 VOLUME $ALLURE_FOLDER_CHROME
